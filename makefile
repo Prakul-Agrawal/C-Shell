@@ -1,2 +1,2 @@
-main:
-	gcc -g main.c prompt.c
+all:
+	gcc -g main.c prompt/prompt.c -o main
