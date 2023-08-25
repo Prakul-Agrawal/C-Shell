@@ -9,15 +9,12 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <stdbool.h>
+#include "utils/common/common.h"
 
 #define rep(i, s, e) for (int i = s; i < e; i++)
 #define min(a, b) (a <= b ? a : b)
 #define max(a, b) (a >= b ? a : b)
 #define MAX_COMMAND_LEN 2048
-
-static void crash(const char *msg) {
-    perror(msg);
-    exit(EXIT_FAILURE);
-}
+#define MAX_PATH_LEN 1024
 
 #endif // MP1_HEADERS_H
