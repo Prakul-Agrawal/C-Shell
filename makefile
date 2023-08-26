@@ -1,2 +1,2 @@
 all:
-	gcc -g main.c prompt/prompt.c utils/**/*.c -o main
+	gcc -g main.c prompt/prompt.c utils/**/*.c commands/**/*.c -o main

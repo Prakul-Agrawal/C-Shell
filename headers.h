@@ -17,4 +17,7 @@
 #define MAX_COMMAND_LEN 2048
 #define MAX_PATH_LEN 1024
 
+char home_path[MAX_PATH_LEN + 1], pwd[MAX_PATH_LEN + 1];
+extern bool is_pwd_set;
+
 #endif // MP1_HEADERS_H
