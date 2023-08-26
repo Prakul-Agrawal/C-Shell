@@ -7,4 +7,6 @@ size_t get_segment_count(char*, char*);
 
 char **split_string(char*, char*);
 
+char *left_strip(char*, char*);
+
 #endif //MP1_DELIMITER_H

@@ -5,6 +5,10 @@ void die(const char *msg) {
     exit(EXIT_FAILURE);
 }
 
+void err(const char *msg) {
+    perror(msg);
+}
+
 void *safe_malloc(size_t size, unsigned long line) {
     void *ptr = malloc(size);
     if (ptr == NULL) {

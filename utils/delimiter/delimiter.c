@@ -7,7 +7,6 @@ size_t get_segment_count(char* input, char* delimiter) {
     char *token = strtok(temp, delimiter);
     while (token != NULL) {
         count++;
-        // printf("Token: %s\n", token);
         token = strtok(NULL, delimiter);
     }
     free(temp);
@@ -30,4 +29,24 @@ char **split_string(char* input, char* delimiter) {
     }
     free(temp);
     return segments;
+}
+
+char *left_strip(char* input, char* delimiters)  {
+    size_t input_len = strlen(input);
+    size_t delimiters_len = strlen(delimiters);
+    size_t i = 0;
+    while (i < input_len) {
+        size_t j = 0;
+        while (j < delimiters_len) {
+            if (input[i] == delimiters[j]) {
+                i++;
+                break;
+            }
+            j++;
+        }
+        if (j == delimiters_len) {
+            break;
+        }
+    }
+    return input + i;
 }

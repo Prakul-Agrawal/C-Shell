@@ -9,4 +9,6 @@ void die(const char *msg);
 
 void *safe_malloc(size_t, unsigned long);
 
+void err(const char*);
+
 #endif //MP1_COMMON_H
