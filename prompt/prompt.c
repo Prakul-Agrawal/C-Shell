@@ -4,8 +4,7 @@
 
 const size_t max_len = MAX_COMMAND_LEN; 
 
-char user_name[MAX_COMMAND_LEN + 1], system_name[MAX_COMMAND_LEN + 1], 
-cwd[MAX_COMMAND_LEN + 1];
+char user_name[MAX_COMMAND_LEN + 1], system_name[MAX_COMMAND_LEN + 1];
 
 void get_user_name() {
     struct passwd *pw = getpwuid(getuid());
@@ -18,18 +17,11 @@ void get_system_name() {
     }
 }
 
-void get_cwd() {
-    if (getcwd(cwd, max_len) == NULL) {
-        die("getcwd() failed");
-    }
-}
-
 void prompt() {
     get_user_name();
     get_system_name();
-    get_cwd();
-
-    char* home_path = get_home_path();
+    char *cwd = get_cwd();
+    // char* home_path = home_path;
 
     size_t home_path_len = strlen(home_path);
 
@@ -47,7 +39,7 @@ void prompt() {
         flag = false;
     }
 
-    free(home_path);
+    // free(home_path);
 
     if (flag) {
         char temp[MAX_PATH_LEN + 1];
@@ -59,5 +51,7 @@ void prompt() {
         strcpy(cwd, temp);
     }
 
-    printf("<%s@%s:%s> ", user_name, system_name, cwd);  
+    printf("<%s@%s:%s> ", user_name, system_name, cwd);
+    
+    free(cwd);  
 }

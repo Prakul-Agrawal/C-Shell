@@ -2,7 +2,7 @@
 #define MP1_PROMPT_H
 
 #include "../headers.h"
-#include "../utils/home/home.h"
+#include "../utils/cwd/cwd.h"
 
 void prompt();
 
