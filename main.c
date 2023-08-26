@@ -1,6 +1,7 @@
 #include "headers.h"
 #include "prompt/prompt.h"
 #include "commands/warp/warp.h"
+#include "commands/proclore/proclore.h"
 
 char home_path[MAX_PATH_LEN + 1], pwd[MAX_PATH_LEN + 1];
 bool is_pwd_set = false;
@@ -37,9 +38,13 @@ int main()
                 {
                     warp(left_strip(commands[j], " \t"));
                 }
+                else if (strcmp(cmd, "proclore") == 0)
+                {
+                    proclore(left_strip(commands[j], " \t"));
+                }
                 else
                 {
-                    printf("Command not found\n");
+                    printf("ERROR: %s is not a valid command\n", cmd);
                 }
             }
 
