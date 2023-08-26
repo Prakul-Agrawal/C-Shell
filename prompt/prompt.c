@@ -21,7 +21,6 @@ void prompt() {
     get_user_name();
     get_system_name();
     char *cwd = get_cwd();
-    // char* home_path = home_path;
 
     size_t home_path_len = strlen(home_path);
 
@@ -38,8 +37,6 @@ void prompt() {
     else {
         flag = false;
     }
-
-    // free(home_path);
 
     if (flag) {
         char temp[MAX_PATH_LEN + 1];
