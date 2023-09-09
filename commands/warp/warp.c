@@ -30,25 +30,26 @@ void warp(char* input) {
     }
 
     rep(i, 0, arg_count) {
-        char *path = args[i];
+        char path[MAX_PATH_LEN + 1];
+        strcpy(path, args[i]);
 
         char *temp_pwd = get_cwd();
 
-        if (strlen(path) == 1 && path[0] == '-'){
+        if (strlen(args[i]) == 1 && args[i][0] == '-'){
             if (is_pwd_set == false){
                 printf("Previous directory is not set\n");
                 free(temp_pwd);
                 continue;
             }
             else {
-                path = pwd;
+                strcpy(path, pwd);
             }
         }
-        else if (path[0] == '~') {
+        else if (args[i][0] == '~') {
             size_t home_path_len = strlen(home_path);
             char temp[MAX_PATH_LEN + 1];
             strcpy(temp, home_path);
-            strcat(temp, path + 1);
+            strcat(temp, args[i] + 1);
             strcpy(path, temp);
         }
 
