@@ -45,3 +45,5 @@ The following utility functions are used by other files:
 | utils/common/ | Contains some common useful functions used by other files, such as a safe malloc, error handling, etc. |
 
 # Assumptions
+
+- If the word `pastevents` comes anywhere in the command (without the correct usage of `pastevents execute <number>`), the command will not be included in the history.

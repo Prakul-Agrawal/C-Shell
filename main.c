@@ -9,13 +9,15 @@ int main()
     strcpy(home_path, temp_home_path);
     free(temp_home_path);
 
+    set_history_path();
+
     // Keep accepting commands
     while (1)
     {
         prompt();
         char input[MAX_COMMAND_LEN];
         fgets(input, MAX_COMMAND_LEN, stdin);
-        // update_history(input);
         execute(input);    
+        update_history(input);
     }
 }
