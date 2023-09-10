@@ -5,6 +5,7 @@
 #include "../../commands/warp/warp.h"
 #include "../../commands/proclore/proclore.h"
 #include "../../commands/pastevents/pastevents.h"
+#include "../../commands/peek/peek.h"
 
 void exit_program(char*);
 

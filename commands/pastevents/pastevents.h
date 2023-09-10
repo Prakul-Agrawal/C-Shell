@@ -3,7 +3,6 @@
 
 #include "../../headers.h"
 #include "../../utils/str_to_num/str_to_num.h"
-#include "../../utils/delimiter/delimiter.h"
 #include "../../utils/history/history.h"
 #include "../../utils/execute/execute.h"
 
