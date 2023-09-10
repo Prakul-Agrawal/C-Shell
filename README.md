@@ -11,7 +11,7 @@ Run `make` in the root directory to build. Run `./main` to run the shell.
 
 ## Directory structure
 
-- `main.c` is the main file which contains the main function and is the entry point of the program.
+- `main.c` is the main file which initializes the shell and is the entry point of the program.
 - `headers.h` is the header file which contains all the general function declarations and global variables.
 - `prompt` folder contains the source code for the prompt of the shell.
 - `utils` folder contains the source code for some utility functions required by other files.
@@ -33,6 +33,8 @@ The shell supports the following commands:
 | --- | --- | --- |
 | commands/warp/ | Change working directory to a directory specified by the user | `warp <path>` |
 | commands/proclore/ | Print information about a process specified by the user | `proclore <pid>` |
+| commands/pastevents/ | Print the last 15 (at most) commands executed by the user. Also used to clear history or run some previous command | `pastevents <purge> / <execute index>` |
+| commands/peek/ | Print the files and directories present in the given directory | `peek <-l> <-a> <path>` | 
 
 # Utilities
 The following utility functions are used by other files:
@@ -43,7 +45,10 @@ The following utility functions are used by other files:
 | utils/cwd/ | Return the current working directory |
 | utils/str_to_num/ | Can check if a string is a number, and convert a string to a number |
 | utils/common/ | Contains some common useful functions used by other files, such as a safe malloc, error handling, etc. |
+| utils/execute/ | The main part of the code which executes all the other commands. |
+| utils/history/ | Contains commands to handle storing and retrieving history from the persistent storage. |
 
 # Assumptions
 
 - If the word `pastevents` comes anywhere in the command (without the correct usage of `pastevents execute <number>`), the command will not be included in the history.
+- The command `peek` *can* include more than one path as well, and will just display the contents of all the paths given one after another. The flags can also come anywhere in the command, and will be handled accordingly.
