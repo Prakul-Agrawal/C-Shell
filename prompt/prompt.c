@@ -48,7 +48,13 @@ void prompt() {
         strcpy(cwd, temp);
     }
 
-    printf("<%s@%s:%s> ", user_name, system_name, cwd);
+    if(last_command_time <= 2)
+        printf("<%s@%s:%s> ", user_name, system_name, cwd);
+    else {
+        printf("<%s@%s:%s %s : %ds> ", user_name, system_name, cwd, last_command, last_command_time);
+        strcpy(last_command, "");
+        last_command_time = 0;
+    }
     
     free(cwd);  
 }

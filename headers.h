@@ -15,6 +15,8 @@
 #include <grp.h>
 #include <time.h>
 #include <fcntl.h>
+#include <sys/wait.h>
+#include <signal.h>
 
 #include "utils/common/common.h"
 #include "utils/delimiter/delimiter.h"
@@ -26,7 +28,8 @@
 #define MAX_PATH_LEN 1024
 #define MAX_HISTORY_SIZE 15
 
-char home_path[MAX_PATH_LEN + 1], pwd[MAX_PATH_LEN + 1];
+char home_path[MAX_PATH_LEN + 1], pwd[MAX_PATH_LEN + 1], last_command[MAX_COMMAND_LEN + 1];
 extern bool is_pwd_set;
+extern int last_command_time;
 
 #endif // MP1_HEADERS_H

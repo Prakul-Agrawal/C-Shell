@@ -7,35 +7,111 @@ void exit_program(char* input) {
     exit(EXIT_SUCCESS);
 }
 
-void execute(char *input) {
+void run_cmd(char* cmd, bool isBackground) {
+    struct timespec start_time, end_time;
+    clock_gettime(CLOCK_MONOTONIC, &start_time);
+
     char temp[MAX_COMMAND_LEN + 1];
-    char** split_at_amp = split_string(input, "&");
-    size_t split_at_amp_count = get_segment_count(input, "&");
+    strcpy(temp, cmd);
+    char* cmd_name = strtok(temp, " \t\n");
+    bool isCustom = false;
 
-    rep(i, 0, split_at_amp_count){
-        char** commands = split_string(split_at_amp[i], ";");
-        size_t commands_count = get_segment_count(split_at_amp[i], ";");
+    rep(i, 0, sizeof(command_names)/sizeof(command_names[0])){
+        if (strcmp(cmd_name, command_names[i]) == 0)
+        {
+            isCustom = true;
+            command_functions[i](left_strip(cmd, " \t"));
+            clock_gettime(CLOCK_MONOTONIC, &end_time);
+            last_command_time = (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_nsec - start_time.tv_nsec) / 1e9;
+            strcpy(last_command, cmd_name);
+        }
+    }
 
-        rep(j, 0, commands_count){
-            strcpy(temp, commands[j]);
-            char* cmd = strtok(temp, " \t\n");
+    if (!isCustom) {
+        char** args = split_string(cmd, " \t\n");
+        size_t arg_count = get_segment_count(cmd, " \t\n");
 
-            rep(k, 0, sizeof(command_names)/sizeof(command_names[0])){
-                if (strcmp(cmd, command_names[k]) == 0)
-                {
-                    command_functions[k](left_strip(commands[j], " \t"));
-                }
+        pid_t pid = fork();
+        if (pid == -1) {
+            err("fork() failed");
+        }
+        else if (pid == 0) {
+            if (setpgid(0, 0) == -1) {
+                die("setpgid() failed");
+            }
+
+            char** temp_args = realloc(args, sizeof(char*) * (arg_count + 1));
+            if (temp_args == NULL) {
+                die("realloc() failed");
+            }
+            args = temp_args;
+            args[arg_count] = NULL;
+
+            if (execvp(args[0], args) == -1) {
+                die("execvp() failed");
+            }
+        }
+        else {
+            if (!isBackground) {
+                waitpid(pid, NULL, 0);
+                clock_gettime(CLOCK_MONOTONIC, &end_time);
+                last_command_time = (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_nsec - start_time.tv_nsec) / 1e9;
+                strcpy(last_command, args[0]);
+            }
+            else {
+                printf("%d\n", pid);
             }
         }
 
-        rep(j, 0, commands_count){
-            free(commands[j]);
+        rep(i, 0, arg_count){
+            free(args[i]);
         }
-        free(commands);
+        free(args);
     }
+}
 
-    rep(i, 0, split_at_amp_count){
-        free(split_at_amp[i]);
+bool is_empty(char *s) {
+    while (*s != '\0') {
+        if (!isspace(*s)) {
+            return false;
+        }
+        s++;
     }
-    free(split_at_amp);
+    return true;
+}
+
+void execute(char *input) {
+    char temp[MAX_COMMAND_LEN + 1] = "";
+    char *inputPtr = input;
+
+    while(*inputPtr != '\0') {
+        if (*inputPtr == '&') {
+            if (is_empty(temp)) {
+                printf("Invalid empty command\n");
+            }
+            else {
+                run_cmd(temp, true);
+            }
+            strcpy(temp, "");
+        }
+        else if (*inputPtr == ';') {
+            if (is_empty(temp)) {
+                printf("Invalid empty command\n");
+            }
+            else {
+                run_cmd(temp, false);
+            }
+            strcpy(temp, "");
+        }
+        else if (*inputPtr == '\n') {
+            if (!is_empty(temp)) {
+                run_cmd(temp, false);
+            }
+            strcpy(temp, "");
+        }
+        else {
+            strncat(temp, inputPtr, 1);
+        }
+        inputPtr++;
+    }
 }

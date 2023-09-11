@@ -5,7 +5,7 @@
 
 ## Building and running
 
-Run `make` in the root directory to build. Run `./main` to run the shell.
+Run `make` in the root directory to build. Run `./bombshell` to run the shell.
 
 # Description
 
