@@ -1,7 +1,7 @@
 #include "execute.h"
 
-char *command_names[] = {"exit", "warp", "proclore", "pastevents", "peek", "iMan"};
-void (*command_functions[])(char *) = {exit_program, warp, proclore, pastevents, peek, iMan};
+char *command_names[] = {"exit", "warp", "proclore", "pastevents", "peek", "iMan", "neonate"};
+void (*command_functions[])(char *) = {exit_program, warp, proclore, pastevents, peek, iMan, neonate};
 
 void exit_program(char *input)
 {

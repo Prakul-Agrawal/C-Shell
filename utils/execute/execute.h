@@ -7,6 +7,7 @@
 #include "../../commands/pastevents/pastevents.h"
 #include "../../commands/peek/peek.h"
 #include "../../commands/iMan/iMan.h"
+#include "../../commands/neonate/neonate.h"
 
 void exit_program(char*);
 

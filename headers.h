@@ -19,6 +19,7 @@
 #include <signal.h>
 #include <netdb.h>
 #include <sys/socket.h>
+#include <termios.h>
 
 #include "utils/common/common.h"
 #include "utils/delimiter/delimiter.h"
