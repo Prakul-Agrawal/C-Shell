@@ -22,6 +22,7 @@
 
 #include "utils/common/common.h"
 #include "utils/delimiter/delimiter.h"
+#include "utils/process/process.h"
 
 #define rep(i, s, e) for (int i = s; i < e; i++)
 #define min(a, b) (a <= b ? a : b)

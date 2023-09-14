@@ -22,9 +22,6 @@ Run `make` in the root directory to build. Run `./bombshell` to run the shell.
 - The working directory of the shell is the directory where it was executed from.
 - Commands can be chained with `;` or `&`. For now, background processes are not supported.
 - Type `exit` to exit the shell.
-<!-- - The shell supports the following commands:
-  - `warp` - change working directory to a directory specified by the user
-  - `proclore` - print information about a process specified by the user -->
 
 # Commands
 The shell supports the following commands:
