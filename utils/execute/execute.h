@@ -8,6 +8,7 @@
 #include "../../commands/peek/peek.h"
 #include "../../commands/iMan/iMan.h"
 #include "../../commands/neonate/neonate.h"
+#include "../../commands/activities/activities.h"
 
 void exit_program(char*);
 

@@ -1,7 +1,7 @@
 #include "execute.h"
 
-char *command_names[] = {"exit", "warp", "proclore", "pastevents", "peek", "iMan", "neonate"};
-void (*command_functions[])(char *) = {exit_program, warp, proclore, pastevents, peek, iMan, neonate};
+char *command_names[] = {"exit", "warp", "proclore", "pastevents", "peek", "iMan", "neonate", "activities"};
+void (*command_functions[])(char *) = {exit_program, warp, proclore, pastevents, peek, iMan, neonate, activities};
 
 void exit_program(char *input)
 {
@@ -63,14 +63,15 @@ void run_cmd(char *cmd, bool isBackground)
         }
         else
         {
-            int process_index = addProcess(pid, args[0], "RUNNING", isBackground);
+            // printf("CMD: %s\n", cmd);
+            int process_index = addProcess(pid, args[0], left_strip(cmd, " \t"), "Running", isBackground);
             if (!isBackground)
             {
                 waitpid(pid, NULL, WUNTRACED);
                 clock_gettime(CLOCK_MONOTONIC, &end_time);
                 last_command_time = (end_time.tv_sec - start_time.tv_sec) + (end_time.tv_nsec - start_time.tv_nsec) / 1e9;
                 strcpy(last_command, args[0]);
-                updateProcessStatus(pid, "Excited normally", true);
+                updateProcessStatus(pid, "Excited normally", true, false, false);
             }
             else
             {
