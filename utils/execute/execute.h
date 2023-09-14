@@ -6,6 +6,7 @@
 #include "../../commands/proclore/proclore.h"
 #include "../../commands/pastevents/pastevents.h"
 #include "../../commands/peek/peek.h"
+#include "../../commands/iMan/iMan.h"
 
 void exit_program(char*);
 
