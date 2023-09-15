@@ -58,3 +58,4 @@ The following utility functions are used by other files:
 - `iMan` only prints NAME, SYNOPSIS and DESCRIPTION for the command given. It doesn't print the other sections. Also, if the length of these exceeds the buffer length of 4096, it truncates it.
 - `neonate` command only takes integer values are valid argument for time.
 - After a background process terminates, the display will display the main command name, not the entire command.
+- Pipes works with I/O redirection as well. However, custom commands are not involved in the pipe.
