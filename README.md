@@ -20,7 +20,9 @@ Run `make` in the root directory to build. Run `./a.out` to run the shell.
 ## Usage
 
 - The working directory of the shell is the directory where it was executed from.
-- Commands can be chained with `;` or `&`. For now, background processes are not supported.
+- Commands can be chained with `;` or `&`. `&` is to send the process to the background.
+- The symbols `<`, `>` and `>>` are used for input, output and output append redirection respectively.
+- We can use `|` to pipe the output of one command to another.
 - Type `exit` to exit the shell.
 
 # Commands
