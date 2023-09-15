@@ -146,6 +146,10 @@ void peek(char *input) {
                 }
                 else {
                     printf("Invalid option: %c\n", args[i][j]);
+                    rep(i, 0, arg_count) {
+                        free(args[i]);
+                    }
+                    free(args);
                     return;
                 }
             }
@@ -219,6 +223,10 @@ void peek(char *input) {
         char **names = listFilesAndDirs(path, showHidden, &count);
 
         if (names == NULL) {
+            rep(i, 0, arg_count) {
+                free(args[i]);
+            }
+            free(args);
             return;
         }
 
@@ -262,4 +270,9 @@ void peek(char *input) {
         }
         free(names);
     }
+
+    rep(i, 0, arg_count) {
+        free(args[i]);
+    }
+    free(args);
 }
