@@ -1,3 +1,3 @@
 all:
-	gcc -g main.c prompt/prompt.c utils/**/*.c commands/**/*.c -fsanitize=address -fsanitize=undefined -o bombshell
-	# gcc -g main.c prompt/prompt.c utils/**/*.c commands/**/*.c -o bombshell
+	gcc -g main.c prompt/prompt.c utils/**/*.c commands/**/*.c -fsanitize=address -fsanitize=undefined
+	# gcc -g main.c prompt/prompt.c utils/**/*.c commands/**/*.c

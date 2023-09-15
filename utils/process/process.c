@@ -19,7 +19,6 @@ int addProcess(pid_t pid, const char *cmd_name, const char *command, const char 
         processArray[numProcesses].exited = false;
         processArray[numProcesses].running = true;
         processArray[numProcesses].stopped = false;
-        // printf("Command '%s' with pid %d added successfully\n", processArray[numProcesses].command, processArray[numProcesses].pid);
         numProcesses++;
     } else {
         die("Maximum number of processes exceeded");
@@ -99,15 +98,7 @@ struct ProcessInfo *getSortedProcesses(int *process_count) {
         die("malloc() failed");
     }
 
-    // rep(i, 0, numProcesses) {
-    //     printf("Command: %s\n", processArray[i].command);
-    // }
-
     memcpy(processes, processArray, numProcesses * sizeof(struct ProcessInfo));
-
-    // rep(i, 0, numProcesses) {
-    //     printf("Command: %s\n", processes[i].command);
-    // }
 
     qsort(processes, numProcesses, sizeof(struct ProcessInfo), compareByPid);
 

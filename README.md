@@ -5,7 +5,7 @@
 
 ## Building and running
 
-Run `make` in the root directory to build. Run `./bombshell` to run the shell.
+Run `make` in the root directory to build. Run `./a.out` to run the shell.
 
 # Description
 
@@ -31,7 +31,10 @@ The shell supports the following commands:
 | commands/warp/ | Change working directory to a directory specified by the user | `warp <path>` |
 | commands/proclore/ | Print information about a process specified by the user | `proclore <pid>` |
 | commands/pastevents/ | Print the last 15 (at most) commands executed by the user. Also used to clear history or run some previous command | `pastevents <purge> / <execute index>` |
-| commands/peek/ | Print the files and directories present in the given directory | `peek <-l> <-a> <path>` | 
+| commands/peek/ | Print the files and directories present in the given directory | `peek <-l> <-a> <path>` |
+| commands/activities/ | Print a sorted list of all the processes spawed by the shell | `activities` |
+| commands/neonate/ | Continuously prints the pid of the most recently created process of the system at fixed intervals | `neonate -n <time_arg>` |
+| commands/iMan/ | Print the manual for the command given, by using sockets to get the information from the web | `iMan <command>` |
 
 # Utilities
 The following utility functions are used by other files:
@@ -44,8 +47,14 @@ The following utility functions are used by other files:
 | utils/common/ | Contains some common useful functions used by other files, such as a safe malloc, error handling, etc. |
 | utils/execute/ | The main part of the code which executes all the other commands. |
 | utils/history/ | Contains commands to handle storing and retrieving history from the persistent storage. |
+| utils/process/ | Contains functions to handle the process list for processes spawed by the shell. |
+| utils/rawmode/ | It allows us to toggle back and forth between raw mode and cooked mode. |
 
 # Assumptions
 
 - If the word `pastevents` comes anywhere in the command (without the correct usage of `pastevents execute <number>`), the command will not be included in the history.
 - The command `peek` *can* include more than one path as well, and will just display the contents of all the paths given one after another. The flags can also come anywhere in the command, and will be handled accordingly.
+- The way the input is parsed doesn't take into account quotation marks. Therefore commands like `echo` print the text along with the quotes.
+- `iMan` only prints NAME, SYNOPSIS and DESCRIPTION for the command given. It doesn't print the other sections. Also, if the length of these exceeds the buffer length of 4096, it truncates it.
+- `neonate` command only takes integer values are valid argument for time.
+- After a background process terminates, the display will display the main command name, not the entire command.
