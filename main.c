@@ -1,10 +1,9 @@
-#include "headers.h"
-#include "prompt/prompt.h"
-#include "commands/warp/warp.h"
-#include "commands/proclore/proclore.h"
+#include "main.h"
 
 char home_path[MAX_PATH_LEN + 1], pwd[MAX_PATH_LEN + 1];
 bool is_pwd_set = false;
+int last_command_time = 0;
+char last_command[MAX_COMMAND_LEN + 1];
 
 int main()
 {
@@ -12,51 +11,25 @@ int main()
     strcpy(home_path, temp_home_path);
     free(temp_home_path);
 
-    // Keep accepting commands
+    set_history_path();
+
+    struct sigaction sa;
+    sa.sa_flags = SA_RESTART;
+    sa.sa_sigaction = processUpdateHandler;
+    sigemptyset(&sa.sa_mask);
+    if (sigaction(SIGCHLD, &sa, NULL) == -1)
+    {
+        die("sigaction() failed");
+    }
+    signal(SIGTTOU, SIG_IGN);
+
     while (1)
     {
         prompt();
-        char input[MAX_COMMAND_LEN], temp[MAX_COMMAND_LEN];
+        char input[MAX_COMMAND_LEN];
         fgets(input, MAX_COMMAND_LEN, stdin);
-
-        char** split_at_amp = split_string(input, "&");
-        size_t split_at_amp_count = get_segment_count(input, "&");
-
-        rep(i, 0, split_at_amp_count){
-            char** commands = split_string(split_at_amp[i], ";");
-            size_t commands_count = get_segment_count(split_at_amp[i], ";");
-
-            rep(j, 0, commands_count){
-                strcpy(temp, commands[j]);
-                char* cmd = strtok(temp, " \t\n");
-
-                if (strcmp(cmd, "exit") == 0)
-                {
-                    exit(EXIT_SUCCESS);
-                }
-                if (strcmp(cmd, "warp") == 0)
-                {
-                    warp(left_strip(commands[j], " \t"));
-                }
-                else if (strcmp(cmd, "proclore") == 0)
-                {
-                    proclore(left_strip(commands[j], " \t"));
-                }
-                else
-                {
-                    printf("ERROR: %s is not a valid command\n", cmd);
-                }
-            }
-
-            rep(j, 0, commands_count){
-                free(commands[j]);
-            }
-            free(commands);
-        }
-
-        rep(i, 0, split_at_amp_count){
-            free(split_at_amp[i]);
-        }
-        free(split_at_amp);
+        execute(input);    
+        update_history(input);
+        emptyExitedProcessArray();
     }
 }
